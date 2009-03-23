@@ -1,0 +1,66 @@
+<h1>Rapidleech v3</h1>
+<div align="center">
+	
+	<form method="post" action="?mod=transload">
+	<p>Link to Transload: <input size="100" type="text" name="link" value="Enter http:// or ftp:// link you want to transload"  onfocus="if(this.value=='Enter http:// or ftp:// link you want to transload'){this.value=''}" onblur="if(this.value==''){this.value='Enter http:// or ftp:// link you want to transload'}" /> <input type="submit" name="submit" value="Transload" /><br />
+	[ <a href="javascript:moreLinks();">More &gt;&gt;</a> ]</p>
+	</form>
+	<form method="post" action="?mod=action" id="flist">
+	<table width="700px" border=1 class="sortable" id="file_table">
+		<thead>
+			<tr>
+				<td colspan="5" class="unsortable">
+					<span style="float: left;">Path: <?php echo $path; ?></span>
+					<span style="float: right;">[ <a href="index.php?mod=action&action=mkdir">Create Dir</a> ]</span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="5">
+					<span style="float: left;">Select:
+						[ <a href="#" onclick="select('all'); return false;">All</a> ]
+						[ <a href="#" onclick="select('none'); return false;">None</a> ]
+						[ <a href="#" onclick="select('invert'); return false;">Inverted</a> ]
+					</span>
+					<span style="float: right;">Do:
+						<select name="action">
+							<option selected="selected">==Select Action==</option>
+						</select>
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<th width="3%" class="unsortable">&nbsp;</th>
+				<th width="42%">File Name</th>
+				<th width="15%">Size</th>
+				<th width="20%" class="startsort">Time</th>
+				<th width="20%" class="unsortable">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+<?php
+$TotalSize = 0;
+foreach ($Files as $i=>$File) {
+?>
+			<tr>
+				<td><input type="checkbox" name="files[]" value="<?php echo $i; ?>" /></td>
+				<td><?php echo $File['name']; ?></td>
+				<td><?php echo byteConvert($File['size']); ?></td>
+				<td><?php echo date('d-m-y H:i:s',$File['time']); ?></td>
+				<td>&nbsp;</td>
+			</tr>
+<?php 
+	$TotalSize += $File['size'];
+}
+?>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="5" class="sortbottom">
+					Total <b><?php echo count($Files); ?></b> items (<b><?php echo byteConvert($TotalSize); ?></b>)
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	</form>
+
+</div>
