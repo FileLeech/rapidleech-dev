@@ -7,12 +7,21 @@
 
 define('DEV_MODE',1);
 
+// Initialize the download instance here
+require_once('class/DownloadInstance.php');
+$DownloadInstance = DownloadInstance::getInstance();
+if (isset($_GET['mod']) && $_GET['mod'] == 'getProgress') {
+	require_once('controller/progress.php');
+	exit;
+}
+
 // Loader
 require_once('loader.php');
 
 // Get mod from _GET
 $mod = "";
 if (isset($_GET['mod'])) $mod = $_GET['mod'];
+if ($mod == 'transload') require_once('controller/transload.php');
 
 // Content page
 $DisplayContent =  $TemplateClass->getDisplay('content', true);
@@ -23,7 +32,7 @@ switch ($mod) {
 		
 		break;
 	case 'transload':
-		require_once('controller/transload.php');
+		
 		break;
 	default:
 		require_once('controller/default.php');

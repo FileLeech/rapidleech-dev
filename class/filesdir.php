@@ -22,4 +22,54 @@ function byteConvert($bytes){
 	$e = (int)(log($b,$con));
 	return number_format($b/pow($con,$e),2).' '.$s[$e];
 }
+
+/**
+ * Get microtime
+ *
+ * @return float
+ */
+function getmicrotime(){ 
+	list($usec, $sec) = explode(" ",microtime()); 
+	return ((float)$usec + (float)$sec); 
+}
+
+function GetChunkSize($fsize) {
+	if ($fsize <= 1024 * 1024) {
+		return 4096;
+	}
+	if ($fsize <= 1024 * 1024 * 10) {
+		return 4096 * 10;
+	}
+	if ($fsize <= 1024 * 1024 * 40) {
+		return 4096 * 30;
+	}
+	if ($fsize <= 1024 * 1024 * 80) {
+		return 4096 * 47;
+	}
+	if ($fsize <= 1024 * 1024 * 120) {
+		return 4096 * 65;
+	}
+	if ($fsize <= 1024 * 1024 * 150) {
+		return 4096 * 70;
+	}
+	if ($fsize <= 1024 * 1024 * 200) {
+		return 4096 * 85;
+	}
+	if ($fsize <= 1024 * 1024 * 250) {
+		return 4096 * 100;
+	}
+	if ($fsize <= 1024 * 1024 * 300) {
+		return 4096 * 115;
+	}
+	if ($fsize <= 1024 * 1024 * 400) {
+		return 4096 * 135;
+	}
+	if ($fsize <= 1024 * 1024 * 500) {
+		return 4096 * 170;
+	}
+	if ($fsize <= 1024 * 1024 * 1000) {
+		return 4096 * 200;
+	}
+	return 4096 * 210;
+}
 ?>

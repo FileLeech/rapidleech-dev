@@ -57,6 +57,7 @@ function transload() {
 				newRow.insertCell(3).innerHTML = '&nbsp;';
 				newRow.insertCell(4).innerHTML = '<span id="pg_'+id+'">[ Loading Progress Bar ]</span>';
 				newRow.insertCell(5).innerHTML = '&nbsp;';
+				newRow.id = 'row_'+id;
 				// Create the progressbar
 				progress_id[id] = new JS_BRAMUS.jsProgressBar(
 					$('pg_'+id),
@@ -72,10 +73,33 @@ function transload() {
 					}
 				);
 				// Call a function to always repeatedly check for updates on the download progress
-				setTimeout('checkProgress('+id+')',3000);
+				notimeout = false;
+				setTimeout('checkProgress("'+id+'")',3000);
 				$('DownloadLink').value = 'Enter http:// or ftp:// link you want to transload';
 			}
 		});
+	}
+}
+
+var notimeout = false;
+function checkProgress(id) {
+	var link = 'index.php?mod=getProgress&id='+id;
+	new Ajax.Request(link, {
+		method: 'get',
+		onSuccess: function (xmlHttp) {
+			var data = xmlHttp.responseText.evalJSON(true);
+			$('row_'+id).cells[1].innerHTML = data.Status;
+			$('row_'+id).cells[2].innerHTML = data.Size;
+			$('row_'+id).cells[3].innerHTML = data.Received;
+			progress_id[id].setPercentage(data.Percentage);
+			$('row_'+id).cells[5].innerHTML = data.Speed;
+			if (data.Status == 'Finished') {
+				notimeout = true;
+			}
+		}
+	});
+	if (!notimeout) {
+		setTimeout('checkProgress("'+id+'")',1000);
 	}
 }
 
