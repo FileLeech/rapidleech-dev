@@ -1,10 +1,24 @@
 <h1>Rapidleech v3</h1>
 <div align="center">
 	
-	<form method="post" action="?mod=transload">
-	<p>Link to Transload: <input size="100" type="text" name="link" value="Enter http:// or ftp:// link you want to transload"  onfocus="if(this.value=='Enter http:// or ftp:// link you want to transload'){this.value=''}" onblur="if(this.value==''){this.value='Enter http:// or ftp:// link you want to transload'}" /> <input type="submit" name="submit" value="Transload" /><br />
+	<p>Link to Transload: <input size="100" id="DownloadLink" type="text" name="link" value="Enter http:// or ftp:// link you want to transload"  onfocus="if(this.value=='Enter http:// or ftp:// link you want to transload'){this.value=''}" onblur="if(this.value==''){this.value='Enter http:// or ftp:// link you want to transload'}" /> <input type="button" onclick="transload();" value="Transload" /><br />
 	[ <a href="javascript:moreLinks();">More &gt;&gt;</a> ]</p>
-	</form>
+	<!-- Download Queue Table -->
+	<table width="780px" id="dl_table" border=1>
+		<thead>
+			<tr>
+				<th style="width: 280px">Link</th>
+				<th style="width: 130px">Status</th>
+				<th style="width: 70px">Size</th>
+				<th style="width: 70px">Received</th>
+				<th style="width: 185px">Progress</th>
+				<th style="width: 70px">Speed</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	<br />
 	<form method="post" action="?mod=action" id="flist">
 	<table width="700px" border=1 class="sortable" id="file_table">
 		<thead>
