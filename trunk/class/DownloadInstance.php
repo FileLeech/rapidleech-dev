@@ -13,6 +13,8 @@ class DownloadInstance {
 	private function __construct() {
 		// Initialize the instance file
 		$this->InitInstance();
+		// Purge those which are useless
+		$this->PurgeInstance();
 	}
 	
 	public static function getInstance() {
@@ -47,6 +49,7 @@ class DownloadInstance {
 			// Don't overwrite instances!
 			return $this->DownloadInstance[$id];
 		} else {
+			$this->DownloadInstance[$id]['Created'] = time();
 			$this->DownloadInstance[$id]['Name'] = $filename;
 			$this->DownloadInstance[$id]['Link'] = $link;
 			$this->DownloadInstance[$id]['Status'] = $status;
@@ -58,12 +61,43 @@ class DownloadInstance {
 		}
 	}
 	
+	public function editInstance($id,$status,$speed,$received,$size = null) {
+		// Edit the download instance
+		if (!isset($this->DownloadInstance[$id])) {
+			return false;
+		} else {
+			$Instance = $this->DownloadInstance[$id];
+			$Instance['Status'] = $status;
+			if ($size != null) {
+				$Instance[$id]['Size'] = $size;
+			}
+			$Instance['Speed'] = $speed;
+			$Instance['Received'] = $received;
+			$this->DownloadInstance[$id] = $Instance;
+			$this->SaveInstance();
+			return $this->DownloadInstance[$id];
+		}
+	}
+	
 	private function SaveInstance() {
 		// The file will be a variable in the future
 		$DownloadInstance = serialize($this->DownloadInstance);
 		$file = fopen('configs/instance.lst','w');
 		fwrite($file,$DownloadInstance);
 		fclose($file);
+	}
+	
+	private function PurgeInstance() {
+		foreach ($this->DownloadInstance as $id => $Instance) {
+			if (time() - $Instance['Created'] > 3600 ) {
+				unset($this->DownloadInstance[$id]);
+			}
+		}
+		$this->SaveInstance();
+	}
+	
+	public function __deconstruct() {
+		$this->SaveInstance();
 	}
 }
 ?>
