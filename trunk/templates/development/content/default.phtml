@@ -31,9 +31,9 @@
 			<tr>
 				<td colspan="5">
 					<span style="float: left;">Select:
-						[ <a href="#" onclick="select('all'); return false;">All</a> ]
-						[ <a href="#" onclick="select('none'); return false;">None</a> ]
-						[ <a href="#" onclick="select('invert'); return false;">Inverted</a> ]
+						[ <a href="javascript:select('all');">All</a> ]
+						[ <a href="javascript:select('none');">None</a> ]
+						[ <a href="javascript:select('invert');">Inverted</a> ]
 					</span>
 					<span style="float: right;">Do:
 						<select name="action">
@@ -43,7 +43,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th width="3%" class="unsortable">&nbsp;</th>
+				<th width="3%" class="unsortable"><input type="checkbox" id="checkboxAll" onclick="" /></th>
 				<th width="42%">File Name</th>
 				<th width="15%">Size</th>
 				<th width="20%" class="startsort">Time</th>
@@ -54,6 +54,7 @@
 <?php
 $TotalSize = 0;
 foreach ($Files as $i=>$File) {
+	if ($File['type'] == 'file') {
 ?>
 			<tr>
 				<td><input type="checkbox" name="files[]" value="<?php echo $i; ?>" /></td>
@@ -63,7 +64,18 @@ foreach ($Files as $i=>$File) {
 				<td>&nbsp;</td>
 			</tr>
 <?php 
-	$TotalSize += $File['size'];
+		$TotalSize += $File['size'];
+	} elseif ($File['type'] == 'dir') {
+?>
+			<tr>
+				<td>&nbsp;</td>
+				<td><?php echo $File['name']; ?></td>
+				<td><?php echo byteConvert($File['size']); ?></td>
+				<td><?php echo date('d-m-y H:i:s',$File['time']); ?></td>
+				<td>&nbsp;</td>
+			</tr>
+<?php 
+	}
 }
 ?>
 		</tbody>

@@ -10,10 +10,14 @@ define('DEV_MODE',1);
 // Initialize the download instance here
 require_once('class/DownloadInstance.php');
 $DownloadInstance = DownloadInstance::getInstance();
+// Transloads and getProgress needs to bypass the loader process
+// Well, for an unknown reason at the moment...
+// I suspect it's the template engine's problem
 if (isset($_GET['mod']) && $_GET['mod'] == 'getProgress') {
 	require_once('controller/progress.php');
 	exit;
 }
+if (isset($_GET['mod']) && $_GET['mod'] == 'transload') require_once('controller/transload.php');
 
 // Loader
 require_once('loader.php');
@@ -21,7 +25,8 @@ require_once('loader.php');
 // Get mod from _GET
 $mod = "";
 if (isset($_GET['mod'])) $mod = $_GET['mod'];
-if ($mod == 'transload') require_once('controller/transload.php');
+
+$TemplateClass->assignGlobal('template_path', $template_path);
 
 // Content page
 $DisplayContent =  $TemplateClass->getDisplay('content', true);

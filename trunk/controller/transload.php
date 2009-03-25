@@ -66,8 +66,8 @@ if ($error == '') {
 				$chunkTime = $time - $lastChunkTime;
 				$chunkTime = $chunkTime ? $chunkTime : 1;
 				$lastChunkTime = $time;
-				$speed = @round ( $chunkSize / 1024 / $chunkTime, 2 );
-				$speed = byteConvert($speed)."/s";
+				$speed = @round ( $chunkSize / $chunkTime, 2 );
+				$speed = byteConvert($speed/10)."/s";
 				$DownloadInstance->editInstance($id,'Downloading...',$speed,$received);
 			}
 			// Download is finished
