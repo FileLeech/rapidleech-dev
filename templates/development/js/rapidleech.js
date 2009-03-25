@@ -31,10 +31,10 @@ function select(opt) {
 				document.getElementById('checkboxAll').checked = false;
 			break;
 	}
-	return false;
 }
 
 var progress_id = new Array();
+var notimeout = new Array();
 
 function transload() {
 	var link = $('DownloadLink').value;
@@ -73,7 +73,7 @@ function transload() {
 					}
 				);
 				// Call a function to always repeatedly check for updates on the download progress
-				notimeout = false;
+				notimeout[id] = false;
 				setTimeout('checkProgress("'+id+'")',3000);
 				$('DownloadLink').value = 'Enter http:// or ftp:// link you want to transload';
 			}
@@ -81,7 +81,6 @@ function transload() {
 	}
 }
 
-var notimeout = false;
 function checkProgress(id) {
 	var link = 'index.php?mod=getProgress&id='+id;
 	new Ajax.Request(link, {
@@ -94,11 +93,11 @@ function checkProgress(id) {
 			progress_id[id].setPercentage(data.Percentage);
 			$('row_'+id).cells[5].innerHTML = data.Speed;
 			if (data.Status == 'Finished') {
-				notimeout = true;
+				notimeout[id] = true;
 			}
 		}
 	});
-	if (!notimeout) {
+	if (!notimeout[id]) {
 		setTimeout('checkProgress("'+id+'")',1000);
 	}
 }

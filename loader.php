@@ -19,8 +19,9 @@ require_once ('class/filesdir.php');
 require_once ('class/HSTemplate.php');
 
 // Initialize the template engine
+$template_path = dirname ( __FILE__ ) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $TemplateChoice;
 $options = array (
-				'template_path' => dirname ( __FILE__ ) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $TemplateChoice, 
+				'template_path' => $template_path, 
 				'cache_path' => dirname ( __FILE__ ) . DIRECTORY_SEPARATOR . 'cache', 
 				'debug' => false 
 );

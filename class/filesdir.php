@@ -72,4 +72,10 @@ function GetChunkSize($fsize) {
 	}
 	return 4096 * 210;
 }
+
+function htmlpath($relative_path) {
+	$realpath=str_replace("\\", "/", realpath($relative_path));
+	$htmlpathURL=str_replace(APP_PATH,'',$realpath);
+	return $htmlpathURL;
+}
 ?>
