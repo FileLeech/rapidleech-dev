@@ -5,8 +5,6 @@
  * The default page controller
  */
 
-$DisplayContent->assign('path', '/');
-
 // Dummy files
 /*$Files = array(
 	array(
@@ -18,7 +16,14 @@ $DisplayContent->assign('path', '/');
 		'size' => 3894,
 		'time' => time() - 5000));*/
 // You must add a trailing slash
-$Files = getDir('files/');
+$Nav = 'files/';
+if (isset($_GET['nav'])) $Nav.= urldecode($_GET['nav']);
+if (substr($Nav,-1) != '/') $Nav .= '/';
+// Do not allow ../
+$Nav = str_replace('../','/',$Nav);
+$Nav = str_replace('//','/',$Nav);
+$DisplayContent->assign('path', substr($Nav,5));
+$Files = getDir($Nav);
 
 $DisplayContent->assign('Files', $Files);
 
@@ -30,6 +35,7 @@ function getDir($dir,$return = array()) {
 				'name' => $entry,
 				'time' => filemtime_r($dir.$entry),
 				'size' => GetFolderSize($dir.$entry),
+				'realpath' => $dir.$entry,
 				'type' => 'dir');
 		} elseif (is_file($dir.$entry)) {
 			$return[] = array(
