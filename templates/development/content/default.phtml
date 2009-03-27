@@ -24,7 +24,7 @@
 		<thead>
 			<tr>
 				<td colspan="5" class="unsortable">
-					<span style="float: left;">Path: <?php echo $path; ?></span>
+					<span style="float: left;">Path: <?php echo $path; ?> [ <a href="index.php?nav=<?php echo urlencode(substr($path,0,strrpos(substr($path,0,-1),'/')));?>">Up</a> ]</span>
 					<span style="float: right;">[ <a href="index.php?mod=action&action=mkdir">Create Dir</a> ]</span>
 				</td>
 			</tr>
@@ -69,7 +69,7 @@ foreach ($Files as $i=>$File) {
 ?>
 			<tr>
 				<td>&nbsp;</td>
-				<td><?php echo $File['name']; ?></td>
+				<td><a href="index.php?nav=<?php echo urlencode(substr($File['realpath'],6)); ?>"><?php echo $File['name']; ?></a></td>
 				<td><?php echo byteConvert($File['size']); ?></td>
 				<td><?php echo date('d-m-y H:i:s',$File['time']); ?></td>
 				<td>&nbsp;</td>

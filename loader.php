@@ -11,7 +11,7 @@ session_start ();
 if (defined ( DEV_MODE )) {
 	error_reporting ( E_ALL );
 } else {
-	error_reporting ( 0 );
+	//error_reporting ( 0 );
 }
 
 require_once ('configs/configs.php');
