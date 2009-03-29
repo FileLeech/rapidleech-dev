@@ -74,6 +74,8 @@ function fieldEnter(campo,evt,idfld) {
 		noLight(elem);
 		elem.innerHTML = nt;
 		changing = false;
+		// Update filenames and ids
+		updateFilenameID();
 		return false;
 	} else {
 		return true;
