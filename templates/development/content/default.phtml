@@ -20,6 +20,8 @@
 	</table>
 	<br />
 	<form method="post" action="?mod=action" id="flist">
+	<!-- Parameters for file renaming -->
+	<script type="text/javascript">setVarsForm("mod=ajaxrename&path=<?php echo urlencode($path); ?>");</script>
 	<table width="700px" border=1 class="sortable" id="file_table">
 		<thead>
 			<tr>
@@ -57,8 +59,8 @@ foreach ($Files as $i=>$File) {
 	if ($File['type'] == 'file') {
 ?>
 			<tr>
-				<td><input type="checkbox" name="files[]" value="<?php echo $i; ?>" /></td>
-				<td><?php echo $File['name']; ?></td>
+				<td><input type="checkbox" name="files[]" value="<?php echo $File['name']; ?>" /></td>
+				<td><span id="<?php echo htmlentities($File['name']); ?>" class="editText"><?php echo htmlentities($File['name']); ?></span></td>
 				<td><?php echo byteConvert($File['size']); ?></td>
 				<td><?php echo date('d-m-y H:i:s',$File['time']); ?></td>
 				<td>&nbsp;</td>
