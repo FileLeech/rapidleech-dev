@@ -6,6 +6,7 @@
  */
 
 require_once('class/http.class.php');
+require_once('class/filesdir.php');
 
 $url = urldecode($_GET['link']);
 if (!$url) {
