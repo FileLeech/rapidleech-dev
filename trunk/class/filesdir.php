@@ -78,4 +78,15 @@ function htmlpath($relative_path) {
 	$htmlpathURL=str_replace(APP_PATH,'',$realpath);
 	return $htmlpathURL;
 }
+
+/**
+ * Sanitize filename
+ * 
+ * @param string $filename		Filename to santize
+ * @return string
+ */
+function sanitize_filename($filename) {
+	$sanitized_name = preg_replace('/[^0-9a-z\.\_\-\040]/i','',$filename);
+	return $sanitized_name;
+}
 ?>

@@ -9,15 +9,26 @@ define('DEV_MODE',1);
 
 // Initialize the download instance here
 require_once('class/DownloadInstance.php');
+require_once('class/filesdir.php');
 $DownloadInstance = DownloadInstance::getInstance();
 // Transloads and getProgress needs to bypass the loader process
 // Well, for an unknown reason at the moment...
 // I suspect it's the template engine's problem
-if (isset($_GET['mod']) && $_GET['mod'] == 'getProgress') {
-	require_once('controller/progress.php');
+// So all Ajax request should bypass the loader due to template engine problem
+if (isset($_GET['mod'])) {
+	switch ($_GET['mod']) {
+		case 'getProgress':
+			require_once('controller/progress.php');
+			break;
+		case 'transload':
+			require_once('controller/transload.php');
+			break;
+		case 'ajaxrename':
+			require_once('controller/ajaxrename.php');
+			break;
+	}
 	exit;
 }
-if (isset($_GET['mod']) && $_GET['mod'] == 'transload') require_once('controller/transload.php');
 
 // Loader
 require_once('loader.php');
