@@ -102,6 +102,13 @@ function checkProgress(id) {
 	}
 }
 
+function updateFilenameID() {
+	var els = document.getElementsByClassName('editText');
+	for (var i = 0; i < els.length; i++) {
+		els[i].id = els[i].innerHTML;
+	}
+}
+
 String.prototype.URLEncode = function URLEncode( )
 {
  var SAFECHARS = "0123456789" +     // Numeric
