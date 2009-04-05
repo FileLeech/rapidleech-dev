@@ -22,34 +22,36 @@
 	<form method="post" action="?mod=action" id="flist">
 	<!-- Parameters for file renaming -->
 	<script type="text/javascript">setVarsForm("mod=ajaxrename&path=<?php echo urlencode($path); ?>");</script>
-	<table width="700px" border=1 class="sortable" id="file_table">
+	<table width="700px" border=1>
+		<tr>
+			<td colspan="5">
+				<span style="float: left;">Path: <?php echo $path; ?> [ <a href="index.php?nav=<?php echo urlencode(substr($path,0,strrpos(substr($path,0,-1),'/')));?>">Up</a> ]</span>
+				<span style="float: right;">[ <a href="javascript:createDir();">Create Dir</a> ]</span>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5">
+				<span style="float: left;">Select:
+					[ <a href="javascript:select('all');">All</a> ]
+					[ <a href="javascript:select('none');">None</a> ]
+					[ <a href="javascript:select('invert');">Inverted</a> ]
+				</span>
+				<span style="float: right;">Do:
+					<select name="action">
+						<option selected="selected">==Select Action==</option>
+					</select>
+				</span>
+			</td>
+		</tr>
+	</table>
+	<table width="700px" border=1 id="file_table">
 		<thead>
 			<tr>
-				<td colspan="5" class="unsortable">
-					<span style="float: left;">Path: <?php echo $path; ?> [ <a href="index.php?nav=<?php echo urlencode(substr($path,0,strrpos(substr($path,0,-1),'/')));?>">Up</a> ]</span>
-					<span style="float: right;">[ <a href="index.php?mod=action&action=mkdir">Create Dir</a> ]</span>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="5">
-					<span style="float: left;">Select:
-						[ <a href="javascript:select('all');">All</a> ]
-						[ <a href="javascript:select('none');">None</a> ]
-						[ <a href="javascript:select('invert');">Inverted</a> ]
-					</span>
-					<span style="float: right;">Do:
-						<select name="action">
-							<option selected="selected">==Select Action==</option>
-						</select>
-					</span>
-				</td>
-			</tr>
-			<tr>
-				<th width="3%" class="unsortable"><input type="checkbox" id="checkboxAll" onclick="" /></th>
+				<th width="3%">&nbsp;</th>
 				<th width="42%">File Name</th>
 				<th width="15%">Size</th>
-				<th width="20%" class="startsort">Time</th>
-				<th width="20%" class="unsortable">Actions</th>
+				<th width="20%">Time</th>
+				<th width="20%">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -90,5 +92,22 @@ foreach ($Files as $i=>$File) {
 		</tfoot>
 	</table>
 	</form>
-
+<!-- Initialize sortable table -->
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	jQuery('#file_table').dataTable({
+		"bSort": true,
+		"aoColumns": [
+		      		{ "bSortable": false },
+		      		{ "bSortable": true,
+			      		"sType": "string" },
+		      		{ "bSortable": true },
+		      		{ "bSortable": true },
+		      		{ "bSortable": false }],
+		"bPaginate": false,
+		"bFilter": false,
+		"bInfo": false
+	});
+})
+</script>
 </div>

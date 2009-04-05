@@ -33,18 +33,45 @@ function select(opt) {
 	}
 }
 
+function createDir() {
+	
+}
+
 var progress_id = new Array();
 var notimeout = new Array();
 
 function transload() {
-	var link = $('DownloadLink').value;
+	//var link = $('DownloadLink').value;
+	var link = jQuery('#DownloadLink').val();
 	var id = randomString();
 	if (!link || link == 'Enter http:// or ftp:// link you want to transload') {
 		alert('You didn\'t enter a download link!');
 	} else {
 		// Initiate Ajax call for the download link
 		var dllink = 'index.php?mod=transload&id='+id+'&link='+link.URLEncode();
-		new Ajax.Request(dllink, {
+		jQuery.ajax({
+			type: "GET",
+			url: dllink,
+			beforeSend: function() {
+				// Insert a new row
+				jQuery('#dl_table').append(jQuery('#dl_table tr:last').clone());
+				jQuery('#dl_table tr:last').html('<td>'+link+'</td>'+
+						'<td>Starting...</td>'+
+						'<td>&nbsp;</td>'+
+						'<td>&nbsp;</td>'+
+						'<td><span id="pg_'+id+'">[ Loading Progressbar ]</span></td>'+
+						'<td>&nbsp;</td>');
+				jQuery(function() {
+					jQuery('#pg_'+id).progressbar({
+						value: 0
+					})
+				})
+				notimeout[id] = false;
+				setTimeout('checkProgress("'+id+'")',3000);
+				jQuery('#DownloadLink').val('Enter http:// or ftp:// link you want to transload');
+			}
+		})
+		/*new Ajax.Request(dllink, {
 			method: 'get',
 			onCreate: function () {
 				// Create the download link row
@@ -77,7 +104,7 @@ function transload() {
 				setTimeout('checkProgress("'+id+'")',3000);
 				$('DownloadLink').value = 'Enter http:// or ftp:// link you want to transload';
 			}
-		});
+		});*/
 	}
 }
 
