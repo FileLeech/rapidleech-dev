@@ -15,7 +15,7 @@
 function byteConvert($bytes){
 	$b = (int)$bytes;
 	$s = array('B', 'KB', 'MB', 'GB', 'TB');
-	if($b < 0){
+	if($b <= 0){
 	    return "0 ".$s[0];
 	}
 	$con = 1024;
@@ -86,7 +86,7 @@ function htmlpath($relative_path) {
  * @return string
  */
 function sanitize_filename($filename) {
-	$sanitized_name = preg_replace('/[^0-9a-z\.\_\-\040]/i','',$filename);
+	$sanitized_name = preg_replace('/[^0-9a-z\(\)\.\_\-\040]/i','',$filename);
 	return $sanitized_name;
 }
 ?>

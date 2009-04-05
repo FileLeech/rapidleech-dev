@@ -120,14 +120,14 @@ class HSTemplate {
 	 */
 	function &getDisplay($aName, $aSeparate = false) {
 		if ($aSeparate) {
-			$HSTemplateDisplay = & new HSTemplateDisplay ( &$this, $aName );
+			$HSTemplateDisplay = new HSTemplateDisplay ( $this, $aName );
 			return $HSTemplateDisplay;
 		} else {
 			
 			if (isset ( $this->_displays [$aName] )) {
 				return $this->_displays [$aName];
 			} else {
-				$this->_displays [$aName] = & new HSTemplateDisplay ( &$this, $aName );
+				$this->_displays [$aName] = new HSTemplateDisplay ( $this, $aName );
 				return $this->_displays [$aName];
 			}
 		}
