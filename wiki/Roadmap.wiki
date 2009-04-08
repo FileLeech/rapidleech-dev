@@ -1,0 +1,22 @@
+#Briefly shows the roadmap of Rapidleech v3
+
+= Introduction =
+
+This roadmap serves only as a reference.
+
+
+= Release Map =
+The following is a release map which gives an overview which version will have what kind of features.
+
+== Development Release ==
+Development release is marked as extremely unstable and is not suitable for non-developer's uses. It will contain the following features:
+ * Basic file function (delete, rename, copy, etc)
+ * Able to download from direct download links
+ * Navigate files and folders
+ * Able to create new directory
+ * Basic security functions to prevent hacking (restrict access to some files)
+
+== Pre-Alpha Release ==
+The pre-alpha release is still highly unstable and also not suitable for non-developers. This release has been expected to have bugs and still lack of many important features. It will contain the following feature:
+ * Plugins for some important file hosting sites (Like RS, MU, ES, etc..)
+ * Advanced file function (zip, unzip, rar, unrar, etc)
