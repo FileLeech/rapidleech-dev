@@ -60,7 +60,7 @@ function transload() {
 						'<td>Starting...</td>'+
 						'<td>&nbsp;</td>'+
 						'<td>&nbsp;</td>'+
-						'<td><div id="pg_'+id+'" style="width: 150px; height: 20px; "></div></td>'+
+						'<td><div id="pg_'+id+'" style="width: 150px; height: 20px; margin: 0 auto;"></div></td>'+
 						'<td>&nbsp;</td>');
 				jQuery('#dl_table tr:last').attr('id','row_'+id);
 				jQuery(function() {
