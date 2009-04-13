@@ -94,8 +94,9 @@ foreach ($Files as $i=>$File) {
 	</form>
 <!-- Initialize sortable table -->
 <script type="text/javascript">
+var fTable;
 jQuery(document).ready(function() {
-	jQuery('#file_table').dataTable({
+	fTable = jQuery('#file_table').dataTable({
 		"bSort": true,
 		"aoColumns": [
 		      		{ "bSortable": false },
