@@ -21,7 +21,7 @@
 	<br />
 	<form method="post" action="?mod=action" id="flist">
 	<!-- Parameters for file renaming -->
-	<script type="text/javascript">setVarsForm("mod=ajaxrename&path=<?php echo urlencode($path); ?>");</script>
+	<script type="text/javascript">setVarsForm("mod=ajaxrename&path=<?php echo urlencode($path); ?>");var currentPath='<?php echo $path; ?>'</script>
 	<table width="700px" border=1>
 		<tr>
 			<td colspan="5">
@@ -65,7 +65,7 @@ foreach ($Files as $i=>$File) {
 				<td><span id="<?php echo htmlentities($File['name']); ?>" class="editText"><?php echo htmlentities($File['name']); ?></span></td>
 				<td><?php echo byteConvert($File['size']); ?></td>
 				<td><?php echo date('d-m-y H:i:s',$File['time']); ?></td>
-				<td>&nbsp;</td>
+				<td>[<a href="javascript:action('delete','<?php echo $File['name']; ?>');" title="Delete File">X</a>]</td>
 			</tr>
 <?php 
 		$TotalSize += $File['size'];
@@ -86,7 +86,7 @@ foreach ($Files as $i=>$File) {
 		<tfoot>
 			<tr>
 				<td colspan="5" class="sortbottom">
-					Total <b><?php echo count($Files); ?></b> items (<b><?php echo byteConvert($TotalSize); ?></b>)
+					Total <b><span id="fTableItems"><?php echo count($Files); ?></span></b> items (<b><span id="fTableSize"><?php echo byteConvert($TotalSize); ?></span></b>)
 				</td>
 			</tr>
 		</tfoot>
