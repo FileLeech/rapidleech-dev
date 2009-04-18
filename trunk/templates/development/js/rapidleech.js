@@ -33,6 +33,22 @@ function select(opt) {
 	}
 }
 
+function action(act,filename) {
+	switch (act) {
+		case 'delete':
+			var ans = confirm("Are you sure you want to delete "+filename+"?");
+			if (ans) {
+				$.ajax({
+					type: "GET",
+					url: 'index.php',
+					data: {mod:"ajaxaction",action:"delete",file:filename,path:currentPath}
+				})
+			}
+			break;
+	}
+	updatefTable();
+}
+
 function createDir() {
 	
 }
@@ -88,6 +104,9 @@ function checkProgress(id) {
 				jQuery('#row_'+id+' td:eq(5)').html(data.Speed);
 				if (data.Status != 'Finished') {
 					setTimeout('checkProgress("'+id+'")',1000);
+				} else {
+					// Update table data
+					updatefTable();
 				}
 			})
 	/*jQuery.ajax({
@@ -105,6 +124,23 @@ function checkProgress(id) {
 			}
 		}
 	})*/
+}
+
+function updatefTable() {
+	fTable.fnClearTable(0);
+	// Retrieve data
+	var link = 'index.php?mod=refreshFileTable';
+	jQuery.getJSON(
+			link,
+			function(data) {
+				for ( var i in data['files'] ) {
+					fTable.fnAddData(data['files'][i]);
+				}
+				editbox_init();
+				$('#fTableItems').html(data['info']['item']);
+				$('#fTableSize').html(data['info']['size']);
+			}
+			);
 }
 
 function updateFilenameID() {

@@ -26,8 +26,18 @@ if (isset($_GET['mod'])) {
 		case 'ajaxrename':
 			require_once('controller/ajaxrename.php');
 			break;
+		case 'refreshFileTable':
+			require_once('controller/refreshftable.php');
+			break;
+		case 'ajaxaction':
+			require_once('controller/ajaxaction.php');
+			break;
+		default:
+			// Makes sure doesn't exits any defaults
+			$out = 1;
 	}
-	exit;
+	if (!$out)
+		exit;
 }
 
 // Loader
