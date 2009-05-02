@@ -32,6 +32,9 @@ if (isset($_GET['mod'])) {
 		case 'ajaxaction':
 			require_once('controller/ajaxaction.php');
 			break;
+		case 'createdir':
+			require_once('controller/createdir.php');
+			break;
 		default:
 			// Makes sure doesn't exits any defaults
 			$out = 1;
