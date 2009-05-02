@@ -81,6 +81,7 @@ function htmlpath($relative_path) {
 
 /**
  * Sanitize filename
+ * Clears away invalid characters in filename
  * 
  * @param string $filename		Filename to santize
  * @return string

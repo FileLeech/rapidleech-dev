@@ -41,16 +41,36 @@ function action(act,filename) {
 				$.ajax({
 					type: "GET",
 					url: 'index.php',
-					data: {mod:"ajaxaction",action:"delete",file:filename,path:currentPath}
+					data: {mod:"ajaxaction",action:"delete",file:filename,path:currentPath},
+					complete: function() {
+						updatefTable();
+					}
 				})
 			}
 			break;
 	}
-	updatefTable();
 }
 
+
 function createDir() {
-	
+	var folder = prompt("What do you want your folder's name to be?", "Untitled");
+	if (!folder) {
+		alert("You didn't enter a comment name!");
+		return false;
+	}
+	$.ajax({
+		type: "GET",
+		url: 'index.php',
+		data: {mod:"createdir", folder:folder, path:currentPath},
+		success: function (data) {
+			if (data != 'success') {
+				alert(data);
+				return false;
+			} else {
+				updatefTable();
+			}
+		}
+	})
 }
 
 var progress_id = new Array();
@@ -68,7 +88,7 @@ function transload() {
 		jQuery.ajax({
 			type: "GET",
 			url: 'index.php',
-			data: {mod:"transload",id:id,link:link},
+			data: {mod:"transload",id:id,link:link, path:currentPath},
 			beforeSend: function() {
 				// Insert a new row
 				jQuery('#dl_table').append(jQuery('#dl_table tr:last').clone());
@@ -129,13 +149,14 @@ function checkProgress(id) {
 function updatefTable() {
 	fTable.fnClearTable(0);
 	// Retrieve data
-	var link = 'index.php?mod=refreshFileTable';
 	jQuery.getJSON(
-			link,
+			'index.php',
+			{mod:'refreshFileTable',nav:currentPath}, 
 			function(data) {
 				for ( var i in data['files'] ) {
 					fTable.fnAddData(data['files'][i]);
 				}
+				fTable.fnDraw();
 				editbox_init();
 				$('#fTableItems').html(data['info']['item']);
 				$('#fTableSize').html(data['info']['size']);

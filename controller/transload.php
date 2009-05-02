@@ -15,6 +15,9 @@ if (!$url) {
 }
 $parsedUrl = parse_url($url);
 $filename = basename($parsedUrl['path']);
+if (!$_GET['path']) $_GET['path'] = '%2F';
+$path = urldecode($_GET['path']);
+$saveToFile = 'files'.$path.$filename;
 
 // Set script to execute for ever!
 set_time_limit(0);
@@ -49,7 +52,7 @@ if ($error == '') {
 		$DownloadInstance->setInstance($id,$filename,$url,"Starting...",$filesize);
 		if ($error == '') {
 			// Create the download file
-			$fp = fopen('files/'.$filename,'w');
+			$fp = fopen($saveToFile,'w');
 			// Read contents
 			// Loop infintely
 			$received = 0;
